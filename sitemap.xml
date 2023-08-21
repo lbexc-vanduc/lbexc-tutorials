@@ -6,6 +6,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://duc14102.github.io/cmake/</loc>
+         <lastmod>2023-08-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://duc14102.github.io/mkdocs/</loc>
          <lastmod>2023-08-21</lastmod>
          <changefreq>daily</changefreq>
