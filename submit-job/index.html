@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Van-Duc Nguyen" /><link rel="canonical" href="https://lbexc-vanduc.github.io/mkdocs/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Van-Duc Nguyen" /><link rel="canonical" href="https://lbexc-vanduc.github.io/submit-job/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>MkDocs - LBExC</title>
+    <title>Submit Jobs - LBExC</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "MkDocs";
-        var mkdocs_page_input_path = "mkdocs.md";
-        var mkdocs_page_url = "/mkdocs/";
+        var mkdocs_page_name = "Submit Jobs";
+        var mkdocs_page_input_path = "submit-job.md";
+        var mkdocs_page_url = "/submit-job/";
       </script>
     
     <!--[if lt IE 9]>
@@ -44,18 +44,14 @@
                 <li class="toctree-l1"><a class="reference internal" href="../makefile/">Makefile</a>
                 </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../submit-job/">Submit Jobs</a>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Submit Jobs</a>
+    <ul class="current">
+    </ul>
                 </li>
               </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">MkDocs</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#commands">Commands</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#project-layout">Project layout</a>
-    </li>
-    </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mkdocs/">MkDocs</a>
                 </li>
               </ul>
       </div>
@@ -72,7 +68,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
-      <li class="breadcrumb-item active">MkDocs</li>
+      <li class="breadcrumb-item active">Submit Jobs</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -81,26 +77,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="welcome-to-mkdocs">Welcome to MkDocs</h1>
-<p>For full documentation visit <a href="https://www.mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands</h2>
+                <h1 id="this-section-describes-how-to-submit-job-on-slurm">This section describes how to submit job on Slurm</h1>
 <ul>
-<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
-<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
-<li><code>mkdocs build</code> - Build the documentation site.</li>
-<li><code>mkdocs -h</code> - Print help message and exit.</li>
+<li><code>#SBATCH --job-name=JOB-NAME</code> - Name of the job.</li>
+<li><code>#SBATCH --time=4:00:00  # format days-hh:mm:ss</code> - Computing time limit.</li>
+<li><code>#SBATCH --ntasks=2</code> - we use 2 nodes for MPI data distribution.</li>
+<li><code>#SBATCH --cpus-per-task=16</code> - request 16 cores each node.</li>
+<li><code>export OMP_NUM_THREADS=16</code> - use 16 threads for OpenMP parallelism on one node</li>
+<li><code>mpirun ./exe-name</code> - run program with <code>mpirun</code></li>
 </ul>
-<h2 id="project-layout">Project layout</h2>
-<pre><code>mkdocs.yml    # The configuration file.
-docs/
-    index.md  # The documentation homepage.
-    ...       # Other markdown pages, images and other files.
+<p>So, we have sum syntaxes</p>
+<pre><code class="language-bash">#!/bin/bash 
+#SBATCH --job-name=JOB-NAME   
+#SBATCH -p debug_queue  
+#SBATCH --time=4:00:00  # format days-hh:mm:ss  
+#SBATCH --cpus-per-task=16
+#SBATCH --ntasks=2
+export OMP_NUM_THREADS=16
+
+echo &quot;Used nodes:&quot; $SLURM_NODELIST
+mpirun ./exe-name
 </code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../submit-job/" class="btn btn-neutral float-left" title="Submit Jobs"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../makefile/" class="btn btn-neutral float-left" title="Makefile"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../mkdocs/" class="btn btn-neutral float-right" title="MkDocs">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -123,8 +126,10 @@ docs/
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../submit-job/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../makefile/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
+    
+      <span><a href="../mkdocs/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
